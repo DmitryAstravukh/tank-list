@@ -1,0 +1,5 @@
+echo "husky pre-push type checking..."
+npm run typecheck
+
+echo "husky pre-push run test..."
+npm run test

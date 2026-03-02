@@ -1,0 +1,2 @@
+echo "husky pre-commit lint-staged..."
+npm run lint-staged
