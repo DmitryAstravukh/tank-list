@@ -1,0 +1,35 @@
+$content-max-width: 1368px;
+
+/*colors*/
+$color-primary: #e9e2bf;
+$color-primary-soft: #a29e87;
+$color-primary-light: #f9f5e1;
+
+$color-neutral: #474747;
+$color-neutral-soft: #8c8c7c;
+
+$color-accent: #fab81b;
+
+/*input*/
+$input-text: $color-primary-soft;
+$input-text-hover: $color-primary;
+$input-border-color: $color-neutral;
+$input-border-color-focus: $color-primary;
+
+/*input button*/
+$input-search-button-bg: $color-neutral;
+$input-search-button-bg-focus: $color-primary;
+
+/*select*/
+$select-color: $color-primary-soft;
+$select-bg: $color-neutral;
+$select-border-color: $color-neutral;
+$select-border-color-focus: $color-primary;
+
+/*table*/
+$text-table-header-color: $color-neutral-soft;
+$text-table-color: $color-primary;
+$text-table-color-premium: $color-accent;
+
+$text-table-header-size: 12px;
+$text-table-size: 14px;

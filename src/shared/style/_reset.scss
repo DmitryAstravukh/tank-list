@@ -1,0 +1,81 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Убираем стили списков там, где role="list" не нужен
+ul,
+ol {
+  list-style: none;
+}
+
+// Картинки — блочные, адаптивные
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+// Наследование шрифтов в формах
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+// Textarea только вертикальный ресайз
+textarea {
+  resize: vertical;
+}
+
+// Кнопки — без дефолтного фона и бордера
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+// Ссылки — без дефолтного подчёркивания и цвета
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Заголовки — сброс размера (размер задаётся в компонентах)
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// Таблицы
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

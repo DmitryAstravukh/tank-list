@@ -16,6 +16,19 @@ export default defineConfig({
     target: "chrome73",
     cssTarget: "chrome73",
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "@/style/_reset.scss";
+          @use "@/style/_fonts.scss";
+          @use "@/style/_mixins.scss" as m;
+          @use "@/style/_variables.scss" as *;
+          @use "@/style/_global.scss";
+        `,
+      },
+    },
+  },
   test: {
     globals: true,
     projects: [
