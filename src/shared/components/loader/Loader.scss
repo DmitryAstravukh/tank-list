@@ -1,0 +1,73 @@
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &.is-visible {
+    opacity: 1;
+  }
+
+  .loader {
+    border-radius: 0;
+  }
+}
+
+.loader {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 3px;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    border-radius: inherit;
+    background-color: $color-accent;
+    transform-origin: left;
+  }
+
+  &::before {
+    width: 38%;
+    animation: indeterminate-main 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  &::after {
+    width: 22%;
+    animation: indeterminate-secondary 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.95s infinite;
+  }
+}
+
+@keyframes indeterminate-main {
+  0% {
+    transform: translateX(-110%) scaleX(0.4);
+  }
+
+  60% {
+    transform: translateX(150%) scaleX(1);
+  }
+
+  100% {
+    transform: translateX(320%) scaleX(0.6);
+  }
+}
+
+@keyframes indeterminate-secondary {
+  0% {
+    transform: translateX(-120%) scaleX(0.5);
+  }
+
+  65% {
+    transform: translateX(180%) scaleX(0.85);
+  }
+
+  100% {
+    transform: translateX(330%) scaleX(0.4);
+  }
+}

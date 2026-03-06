@@ -1,0 +1,55 @@
+@use "sass:color";
+
+/**
+ * @css
+ * Уменьшает яркость цвета на указанное значение.
+ * Используется для активных состояний, теней, фокуса.
+ * 
+ * @param {color} $color - Исходный цвет
+ * @param {number} $amount - Процент затемнения (0-100%). Положительное значение.
+ * 
+ * @return {color} Новый цвет, затемнённый на `$amount`%.
+ * 
+ * @example
+ * $primary: #3498db;
+ * 
+ * .button {
+ *   background: $primary;                    // #3498db  
+ *   &:active {
+ *     background: darken($primary, 10%);     // #2c82b8
+ *   }
+ * }
+ * 
+ * @see {@link https://sass-lang.com/documentation/modules/color/#adjust | color.adjust()}
+ * 
+ */
+@function darken($color, $amount) {
+  @return color.adjust($color, $lightness: -$amount);
+}
+
+/**
+ * @css
+ * Увеличивает яркость цвета на указанное значение.
+ * Противоположность `darken()` — осветляет цвет для hover/active состояний.
+ * 
+ * @param {color} $color - Исходный цвет (hex, rgb, hsl, named color)
+ * @param {number} $amount - Процент осветления (0-100%). Положительное значение.
+ * 
+ * @return {color} Новый цвет, осветлённый на `$amount`%.
+ * 
+ * @example
+ * $primary: #3498db;
+ * 
+ * .button {
+ *   background: $primary;                    // #3498db
+ *   &:hover {
+ *     background: lighten($primary, 10%);    // #52a8e9
+ *   }
+ * }
+ * 
+ * @see {@link https://sass-lang.com/documentation/modules/color/#adjust | color.adjust()}
+ * 
+ */
+@function lighten($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
