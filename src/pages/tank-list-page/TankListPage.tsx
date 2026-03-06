@@ -2,7 +2,7 @@ import "./TankListPage.scss";
 import { Header } from "./header/Header";
 import { Pagination } from "./pagination/Pagination";
 import { Table } from "./table/Table";
-import { useTanksBrowserController } from "./hooks";
+import { useTanks } from "./hooks";
 
 /**
  * TankListPage — страница просмотра списка танков с поиском и пагинацией.
@@ -32,7 +32,8 @@ export const TankListPage = () => {
     handleSearchClear,
     rows,
     foundTankId,
-  } = useTanksBrowserController();
+    notFound,
+  } = useTanks();
 
   return (
     <>
@@ -43,17 +44,21 @@ export const TankListPage = () => {
         handlePageSizeChange={handlePageSizeChange}
       />
 
-      <section className="tank-list" aria-label="Таблица танков">
-        {/* P.S. можно еще при загрузке добавить скелетон, чтобы таблица не прыгала */}
-        <Table rows={rows} foundTankId={foundTankId} />
+      {typeof notFound === "string" ? (
+        <p className="tank-not-found">Не найдено :(</p>
+      ) : (
+        <section className="tank-list" aria-label="Таблица танков">
+          {/* P.S. можно еще при загрузке добавить скелетон, чтобы таблица не прыгала */}
+          <Table rows={rows} foundTankId={foundTankId} />
 
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalItems}
-          pageSize={pageSize}
-          handlePageChange={handlePageChange}
-        />
-      </section>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            pageSize={pageSize}
+            handlePageChange={handlePageChange}
+          />
+        </section>
+      )}
     </>
   );
 };

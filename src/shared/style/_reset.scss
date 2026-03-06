@@ -79,3 +79,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+// дефолтный крестик сброса ввода в chrome-подобных браузерах(в firefox по дефолту нет)
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input::-webkit-search-decoration {
+  -webkit-appearance: none;
+}

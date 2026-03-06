@@ -3,6 +3,7 @@ import { TankListPage } from "./pages/tank-list-page/TankListPage";
 import { Loader } from "./shared/components/loader/Loader";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "./shared/components/error-boundary/ErrorBoundary";
+import { NotFound } from "./shared/components/not-found/NotFound";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<TankListPage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
       )}

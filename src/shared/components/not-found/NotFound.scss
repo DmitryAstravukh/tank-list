@@ -1,0 +1,20 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  align-items: center;
+  justify-content: center;
+
+  &__img {
+    margin-top: 24px;
+    width: 320px;
+  }
+
+  &__button {
+    margin-top: 24px;
+    font-size: 14px;
+    padding: 14px 24px;
+    color: $color-primary;
+    background-color: $color-primary-dark;
+  }
+}

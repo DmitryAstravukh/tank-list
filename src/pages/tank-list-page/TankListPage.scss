@@ -4,3 +4,10 @@
   padding: $content-padding;
   overflow: hidden;
 }
+
+.tank-not-found {
+  text-align: center;
+  color: $color-primary-soft;
+  font-size: 20px;
+  margin-top: 24px;
+}
