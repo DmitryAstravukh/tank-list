@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { TankListPage } from "./pages/tank-list-page/TankListPage";
+import { Loader } from "./shared/components/loader/Loader";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { ErrorBoundary } from "./shared/components/error-boundary/ErrorBoundary";
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <>
-      <h1>Vite</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-      </div>
-    </>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary title="Ошибка приложения" onReset={reset}>
+          <Loader />
+
+          <Routes>
+            <Route path="/" element={<TankListPage />} />
+          </Routes>
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
   );
-}
+};
 
 export default App;

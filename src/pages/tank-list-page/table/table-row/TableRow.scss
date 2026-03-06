@@ -1,0 +1,8 @@
+.table__row {
+  border-bottom: $table-elements-border;
+  box-sizing: border-box;
+
+  &--found {
+    box-shadow: 0 0 0 1px m.lighten($color-accent, 10%);
+  }
+}

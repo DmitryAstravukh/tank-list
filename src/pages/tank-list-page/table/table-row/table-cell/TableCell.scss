@@ -1,0 +1,12 @@
+.table__cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $color-primary;
+  font-size: $text-table-size;
+  padding: 12px;
+
+  &--premium {
+    color: $color-accent;
+  }
+}

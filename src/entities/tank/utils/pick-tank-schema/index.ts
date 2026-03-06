@@ -4,7 +4,7 @@ import type { TankField } from "../../types";
 
 /**
  * Фабрика Zod-схемы танка с выбранными полями.
- * Извлекает нужные валидаторы из {@link tankSchemaObj} и оборачивает в `z.object`.
+ * Извлекает нужные валидаторы из {@link tankSchemaObj} и оборачивает в z.object.
  *
  * @template {readonly TankField[]} F — кортеж имён полей танка
  * @param {F} fields — массив полей для включения в схему

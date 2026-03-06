@@ -57,5 +57,4 @@ export const TANK_REQUEST_FIELDS = [
   "nation",
   "is_premium",
   "price_credit",
-  "images",
 ] as const satisfies readonly TankField[];

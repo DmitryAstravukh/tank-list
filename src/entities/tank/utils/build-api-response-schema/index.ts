@@ -5,7 +5,7 @@ import { pickTankSchema } from "../pick-tank-schema";
 
 /**
  * Фабрика полной схемы ответа API с фильтрацией полей.
- * Комбинирует {@link pickTankSchema} со структурой `{ status, meta, data }`.
+ * Комбинирует {@link pickTankSchema} со структурой { status, meta, data }.
  *
  * @template {readonly TankField[]} F — кортеж имён полей танка
  * @param {F} fields — массив полей для включения в схему танка
@@ -16,7 +16,7 @@ import { pickTankSchema } from "../pick-tank-schema";
  * const response = schema.parse(apiResponse);
  *
  * @see {@link pickTankSchema} — создаёт схему танка с выбранными полями
- * @see {@link ResponseMetaSchema} — используется для поля `meta`
+ * @see {@link ResponseMetaSchema} — используется для поля meta
  */
 export const buildApiResponseSchema = <const F extends readonly TankField[]>(fields: F) => {
   const vehicleSchema = pickTankSchema(fields);

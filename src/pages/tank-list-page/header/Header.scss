@@ -1,0 +1,122 @@
+.header {
+  background-image: url(https://ptl-ru-cdn.tanki.su/static/5.138.0_895886/ptl_static/img/core/frontend/scss/common/blocks/header/img/header_tankopedia-big.jpg);
+  background-repeat: no-repeat;
+  background-position: 50% 45%;
+  background-size: cover;
+  position: relative;
+  z-index: 5;
+
+  &::after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    content: "";
+    background: linear-gradient(180deg, transparent, #0f0f0f 100%);
+  }
+
+  &__content {
+    max-width: $content-max-width;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    height: 120px;
+    margin: 0 auto;
+    padding: $content-padding;
+  }
+
+  &__search {
+    display: flex;
+    flex-basis: 30%;
+
+    &__input-wrap {
+      width: 100%;
+      position: relative;
+    }
+
+    &__input {
+      height: 32px;
+      width: 100%;
+      font-size: 12px;
+      line-height: 16px;
+      color: $input-text;
+      border: 1px solid $input-border-color;
+      padding: 7px 11px;
+      box-sizing: border-box;
+      transition:
+        border 0.2s ease-out,
+        color 0.2s ease-out;
+      outline: none;
+
+      &:hover:not(:focus) {
+        color: $input-text-hover;
+      }
+
+      &:focus {
+        border-color: $input-border-color-focus;
+
+        ~ .header__search__button:not(:disabled) {
+          background-color: $input-search-button-bg-focus;
+        }
+      }
+    }
+
+    &__clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    &__button {
+      width: 34px;
+      height: 32px;
+      background: $input-search-button-bg
+        url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxNCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAuNTQ0IDkuMjg3QTUuODM2IDUuODM2IDAgMCAwIDUuODM2IDBhNS44MzYgNS44MzYgMCAxIDAgMy40MDkgMTAuNTc0bDMuMzg4IDMuMzZhLjM1My4zNTMgMCAwIDAgLjQ5My0uMDI2bC43NzgtLjc3M2EuMzQ1LjM0NSAwIDAgMCAuMDI3LS40ODlsLTMuMzg3LTMuMzZ6bS00LjcwOC03LjczYTQuMjggNC4yOCAwIDEgMSAwIDguNTYgNC4yOCA0LjI4IDAgMCAxIDAtOC41NnoiIGZpbGw9IiM3OTc5NjgiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==)
+        no-repeat 50%;
+      transition: background-color 0.2s ease-out;
+      border-radius: 0;
+      outline: none;
+      border: none;
+    }
+
+    &__button:disabled {
+      cursor: not-allowed;
+      background-color: m.darken($pagination-active-bg, 8%);
+    }
+  }
+
+  &__select {
+    color: $select-color;
+    background-color: $select-bg;
+    border: 1px solid $select-border-color;
+    border-radius: 0;
+    padding: 7px 11px;
+    height: 32px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease-out;
+
+    &:focus {
+      border-color: $select-border-color-focus;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .header__content h1 {
+    display: none;
+  }
+
+  .header__search {
+    flex-basis: 80%;
+  }
+}

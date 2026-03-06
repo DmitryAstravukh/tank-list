@@ -1,12 +1,19 @@
-$content-max-width: 1368px;
+@use "mixins" as m;
+
+//1368px + padding 12px
+$content-max-width: 1392px;
+$content-padding: 0 12px;
 
 /*colors*/
 $color-primary: #e9e2bf;
 $color-primary-soft: #a29e87;
 $color-primary-light: #f9f5e1;
+$color-primary-dark: #302f2d;
 
 $color-neutral: #474747;
 $color-neutral-soft: #8c8c7c;
+$color-neutral-dark: #2b2a33;
+$color-neutral-light: #cccccc;
 
 $color-accent: #fab81b;
 
@@ -33,3 +40,12 @@ $text-table-color-premium: $color-accent;
 
 $text-table-header-size: 12px;
 $text-table-size: 14px;
+
+$table-elements-border: 1px solid m.darken($color-primary-soft, 30%);
+
+/*pagination*/
+$pagination-color: $color-primary-soft;
+$pagination-hover-color: $color-primary;
+$pagination-active-bg: $color-neutral-dark;
+$pagination-active-color: $color-primary-soft;
+$pagination-disabled-color: $color-neutral-light;

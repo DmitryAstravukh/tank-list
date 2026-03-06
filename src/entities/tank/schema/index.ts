@@ -277,7 +277,7 @@ export const tankSchemaObj = {
   is_gift: z.boolean(),
   name: z.string(),
   price_gold: z.number(),
-  price_credit: z.number(),
+  price_credit: z.number().nullable(),
   default_profile: DefaultProfileSchema,
   turrets: z.array(z.number()),
 } satisfies Record<string, z.ZodTypeAny>;
