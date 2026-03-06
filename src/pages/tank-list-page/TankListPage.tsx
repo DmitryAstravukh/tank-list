@@ -32,7 +32,10 @@ export const TankListPage = () => {
     handleSearchClear,
     rows,
     foundTankId,
+    notFound,
   } = useTanksBrowserController();
+
+  console.log("notFound", notFound);
 
   return (
     <>
@@ -43,17 +46,21 @@ export const TankListPage = () => {
         handlePageSizeChange={handlePageSizeChange}
       />
 
-      <section className="tank-list" aria-label="Таблица танков">
-        {/* P.S. можно еще при загрузке добавить скелетон, чтобы таблица не прыгала */}
-        <Table rows={rows} foundTankId={foundTankId} />
+      {typeof notFound === "string" ? (
+        <p className="tank-not-found">Не найдено :(</p>
+      ) : (
+        <section className="tank-list" aria-label="Таблица танков">
+          {/* P.S. можно еще при загрузке добавить скелетон, чтобы таблица не прыгала */}
+          <Table rows={rows} foundTankId={foundTankId} />
 
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalItems}
-          pageSize={pageSize}
-          handlePageChange={handlePageChange}
-        />
-      </section>
+          <Pagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            pageSize={pageSize}
+            handlePageChange={handlePageChange}
+          />
+        </section>
+      )}
     </>
   );
 };

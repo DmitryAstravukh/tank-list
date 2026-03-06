@@ -71,6 +71,7 @@ describe("TankListPage", () => {
 
       rows: [{ id: 1, name: "Tiger I" }],
       foundTankId: 1,
+      notFound: undefined,
     };
 
     useTanksBrowserControllerMock.mockReturnValue(controller);
@@ -143,5 +144,53 @@ describe("TankListPage", () => {
     expect(controller.handleSearchClear).toHaveBeenCalledTimes(1);
     expect(controller.handlePageSizeChange).toHaveBeenCalledWith(50);
     expect(controller.handlePageChange).toHaveBeenCalledWith(3);
+  });
+
+  it('когда notFound — строка: показывает сообщение "Не найдено :(" и не рендерит таблицу/пагинацию', () => {
+    controller.notFound = "tiger-999";
+    useTanksBrowserControllerMock.mockReturnValue(controller);
+
+    render(<TankListPage />);
+
+    // Header всегда есть
+    expect(screen.getByTestId("Header")).toBeInTheDocument();
+
+    // Появляется сообщение not found
+    const msg = screen.getByText("Не найдено :(");
+    expect(msg).toBeInTheDocument();
+    expect(msg).toHaveClass("tank-not-found");
+
+    // Секция таблицы не должна появляться
+    expect(screen.queryByRole("region", { name: "Таблица танков" })).not.toBeInTheDocument();
+
+    // И дочерние компоненты, которые внутри секции, тоже не должны рендериться
+    expect(screen.queryByTestId("Table")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("Pagination")).not.toBeInTheDocument();
+  });
+
+  it("когда notFound не строка: рендерит таблицу и пагинацию и не показывает сообщение", () => {
+    controller.notFound = undefined; // или null / false / {}
+    useTanksBrowserControllerMock.mockReturnValue(controller);
+
+    render(<TankListPage />);
+
+    expect(screen.getByTestId("Header")).toBeInTheDocument();
+
+    expect(screen.queryByText("Не найдено :(")).not.toBeInTheDocument();
+
+    expect(screen.getByRole("region", { name: "Таблица танков" })).toBeInTheDocument();
+    expect(screen.getByTestId("Table")).toBeInTheDocument();
+    expect(screen.getByTestId("Pagination")).toBeInTheDocument();
+  });
+
+  it("когда notFound равен пустой строке: всё равно считается notFound-веткой (потому что typeof === string)", () => {
+    controller.notFound = "";
+    useTanksBrowserControllerMock.mockReturnValue(controller);
+
+    render(<TankListPage />);
+
+    expect(screen.getByText("Не найдено :(")).toBeInTheDocument();
+    expect(screen.queryByTestId("Table")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("Pagination")).not.toBeInTheDocument();
   });
 });
