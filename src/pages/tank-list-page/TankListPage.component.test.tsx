@@ -1,7 +1,6 @@
-import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // чтобы не падать на импорте стилей
 vi.mock("./TankListPage.scss", () => ({}));
@@ -38,11 +37,11 @@ vi.mock("./pagination/Pagination", () => ({
   },
 }));
 
-// Мок хука-контроллера
-const useTanksBrowserControllerMock = vi.fn();
+// Мок хука-контроллера: ВАЖНО мокать тот же модуль, что импортируется в компоненте
+const useTanksMock = vi.hoisted(() => vi.fn());
 
-vi.mock("./hooks", () => ({
-  useTanksBrowserController: () => useTanksBrowserControllerMock(),
+vi.mock("./hooks/use-tanks", () => ({
+  useTanks: () => useTanksMock(),
 }));
 
 import { TankListPage } from "./TankListPage";
@@ -56,7 +55,7 @@ describe("TankListPage", () => {
     tableProps = undefined;
     paginationProps = undefined;
 
-    useTanksBrowserControllerMock.mockReset();
+    useTanksMock.mockReset();
 
     controller = {
       qFromUrl: "tiger",
@@ -74,15 +73,15 @@ describe("TankListPage", () => {
       notFound: undefined,
     };
 
-    useTanksBrowserControllerMock.mockReturnValue(controller);
+    useTanksMock.mockReturnValue(controller);
   });
 
-  it("вызывает useTanksBrowserController один раз при рендере", () => {
+  it("вызывает useTanks один раз при рендере", () => {
     render(<TankListPage />);
-    expect(useTanksBrowserControllerMock).toHaveBeenCalledTimes(1);
+    expect(useTanksMock).toHaveBeenCalledTimes(1);
   });
 
-  it("рендерит Header, Table, Pagination", () => {
+  it("рендерит Header, Table, Pagination (когда notFound не строка)", () => {
     render(<TankListPage />);
 
     expect(screen.getByTestId("Header")).toBeInTheDocument();
@@ -90,10 +89,9 @@ describe("TankListPage", () => {
     expect(screen.getByTestId("Pagination")).toBeInTheDocument();
   });
 
-  it('рендерит секцию-обёртку с className="tank-list" и aria-label="Таблица танков"', () => {
+  it('рендерит секцию-обёртку с className="tank-list" и aria-label="Таблица танков" (когда notFound не строка)', () => {
     render(<TankListPage />);
 
-    // <section aria-label="..."> имеет роль "region"
     const region = screen.getByRole("region", { name: "Таблица танков" });
     expect(region).toBeInTheDocument();
     expect(region).toHaveClass("tank-list");
@@ -137,45 +135,50 @@ describe("TankListPage", () => {
 
     headerProps.handleSearchClick("kv-1");
     headerProps.handleSearchClear();
-    headerProps.handlePageSizeChange(50);
+
+    // handlePageSizeChange ожидает event, а не число
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    headerProps.handlePageSizeChange({ target: { value: "50" } } as any);
+
     paginationProps.handlePageChange(3);
 
     expect(controller.handleSearchClick).toHaveBeenCalledWith("kv-1");
     expect(controller.handleSearchClear).toHaveBeenCalledTimes(1);
-    expect(controller.handlePageSizeChange).toHaveBeenCalledWith(50);
+
+    expect(controller.handlePageSizeChange).toHaveBeenCalledTimes(1);
+    expect(controller.handlePageSizeChange.mock.calls[0][0].target.value).toBe("50");
+
     expect(controller.handlePageChange).toHaveBeenCalledWith(3);
   });
 
   it('когда notFound — строка: показывает сообщение "Не найдено :(" и не рендерит таблицу/пагинацию', () => {
     controller.notFound = "tiger-999";
-    useTanksBrowserControllerMock.mockReturnValue(controller);
+    useTanksMock.mockReturnValue(controller);
 
     render(<TankListPage />);
 
-    // Header всегда есть
     expect(screen.getByTestId("Header")).toBeInTheDocument();
 
-    // Появляется сообщение not found
     const msg = screen.getByText("Не найдено :(");
     expect(msg).toBeInTheDocument();
     expect(msg).toHaveClass("tank-not-found");
 
-    // Секция таблицы не должна появляться
     expect(screen.queryByRole("region", { name: "Таблица танков" })).not.toBeInTheDocument();
-
-    // И дочерние компоненты, которые внутри секции, тоже не должны рендериться
     expect(screen.queryByTestId("Table")).not.toBeInTheDocument();
     expect(screen.queryByTestId("Pagination")).not.toBeInTheDocument();
+
+    // И props от Table/Pagination не должны выставляться
+    expect(tableProps).toBeUndefined();
+    expect(paginationProps).toBeUndefined();
   });
 
-  it("когда notFound не строка: рендерит таблицу и пагинацию и не показывает сообщение", () => {
-    controller.notFound = undefined; // или null / false / {}
-    useTanksBrowserControllerMock.mockReturnValue(controller);
+  it("когда notFound не строка: рендерит таблицу/пагинацию и не показывает сообщение", () => {
+    controller.notFound = undefined;
+    useTanksMock.mockReturnValue(controller);
 
     render(<TankListPage />);
 
     expect(screen.getByTestId("Header")).toBeInTheDocument();
-
     expect(screen.queryByText("Не найдено :(")).not.toBeInTheDocument();
 
     expect(screen.getByRole("region", { name: "Таблица танков" })).toBeInTheDocument();
@@ -183,9 +186,9 @@ describe("TankListPage", () => {
     expect(screen.getByTestId("Pagination")).toBeInTheDocument();
   });
 
-  it("когда notFound равен пустой строке: всё равно считается notFound-веткой (потому что typeof === string)", () => {
+  it("когда notFound равен пустой строке: это notFound-ветка (typeof notFound === string)", () => {
     controller.notFound = "";
-    useTanksBrowserControllerMock.mockReturnValue(controller);
+    useTanksMock.mockReturnValue(controller);
 
     render(<TankListPage />);
 

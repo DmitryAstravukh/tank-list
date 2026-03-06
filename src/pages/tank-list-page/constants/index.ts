@@ -33,8 +33,18 @@ export const SERVER_LIMIT = 100;
 /** Поля, которые будут запрошены с сервера */
 export const TANK_FIELDS_PARAM = buildFieldsParam(TANK_REQUEST_FIELDS);
 
+/** дефолтные настройки query клиента для страницы списка танков */
 export const TANKS_INFINITE_QUERY_KEY = [
   "tanks",
   "infinite",
   { limit: SERVER_LIMIT, fields: TANK_FIELDS_PARAM },
 ] as const;
+
+/** начальная страница списка */
+export const DEFAULT_PAGE = 1;
+
+/** дефолтное количество элементов на странице */
+export const DEFAULT_PAGE_SIZE = 10;
+
+/** время актуальности кеша запроса */
+export const TANK_STALE_TIME = 600000; //10мин

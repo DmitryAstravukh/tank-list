@@ -2,7 +2,7 @@ import "./TankListPage.scss";
 import { Header } from "./header/Header";
 import { Pagination } from "./pagination/Pagination";
 import { Table } from "./table/Table";
-import { useTanksBrowserController } from "./hooks";
+import { useTanks } from "./hooks";
 
 /**
  * TankListPage — страница просмотра списка танков с поиском и пагинацией.
@@ -33,7 +33,7 @@ export const TankListPage = () => {
     rows,
     foundTankId,
     notFound,
-  } = useTanksBrowserController();
+  } = useTanks();
 
   return (
     <>
