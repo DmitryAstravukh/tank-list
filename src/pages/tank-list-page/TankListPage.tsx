@@ -35,8 +35,6 @@ export const TankListPage = () => {
     notFound,
   } = useTanksBrowserController();
 
-  console.log("notFound", notFound);
-
   return (
     <>
       <Header
